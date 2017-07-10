@@ -23,7 +23,12 @@
   tags: jupyter
 
 - name: create jupyterhub folder in etc
-  file: path=/etc/jupyterhub state=directory mode=0755 owner={{jupyterhub_user} group={{jupyterhub_user}}
+  file:
+    path: /etc/jupyterhub
+    state: directory
+    mode: "0755"
+    owner: "{{jupyterhub_user}}"
+    group: "{{jupyterhub_user}}"
   tags: jupyter
 
 - name: copy jupyterhub sudospawner sudo config
@@ -51,11 +56,15 @@
   tags: jupyter
 
 - name: set jupyterhub admin user
-  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.Authenticator.admin_users = {{jupyterhub_admin_users | to_json}}
+  lineinfile:
+    dest: /etc/jupyterhub/jupyterhub_config.py
+    line: "c.Authenticator.admin_users = {{jupyterhub_admin_users | to_json}}"
   tags: jupyter
 
 - name: set jupyterhub create users
-  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.LocalAuthenticator.create_system_users = {{True if jupyterhub_create_system_users else False}}"
+  lineinfile:
+    dest: /etc/jupyterhub/jupyterhub_config.py
+    line: "c.LocalAuthenticator.create_system_users = {{True if jupyterhub_create_system_users else False}}"
   tags: jupyter
 
 - name: set IP address
