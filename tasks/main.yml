@@ -19,7 +19,11 @@
   tags: jupyter
 
 - name: add jupyter user
-  user: name={{jupyterhub_user}} state=present groups=jupyter,shadow password="{{jupyterhub_user_password}}"
+  user:
+    name: "{{jupyterhub_user}}"
+    state: present
+    groups: "{{jupyterhub_user}},shadow"
+    password: "{{jupyterhub_user_password}}"
   tags: jupyter
 
 - name: create jupyterhub folder in etc
@@ -33,7 +37,6 @@
 
 - name: copy jupyterhub sudospawner sudo config
   template: src=sudoers_jupyterhub.j2 dest=/etc/sudoers.d/jupyterhub mode=0440 owner=root group=root
-  when: 
   tags: jupyter
 
 - name: install jupyter, jupyterhub, sudospawner via pip3
