@@ -6,8 +6,13 @@
   with_items: "{{jupyter_pkgs}}"
   tags: jupyter
 
-- name: easy install for pip3
-  easy_install: executable="/usr/bin/easy_install3" name=pip
+- name: Install pip
+  shell: >
+    curl https://bootstrap.pypa.io/get-pip.py > /dev/shm/get-pip.py &&
+    python3 /dev/shm/get-pip.py ;
+    rm /dev/shm/get-pip
+  args:
+    creates: /usr/local/bin/pip3
   tags: jupyter
 
 - name: install npm package configurable-http-proxy
@@ -95,10 +100,23 @@
   file:
     path: /var/lib/jupyterhub
     state: directory
+  tags: jupyter
+
 
 - name: "Ensure jupyterhub is started"
   service:
     name: jupyterhub
     state: restarted
     enabled: yes
+  tags: jupyter
 
+
+- name: "Add jupterhub to nginx sites"
+  template:
+    src: nginx_jupyterhub.j2
+    dest: /etc/nginx/sites-available/jupyterhub
+    owner: root
+    group: root
+    mode: 0644
+  when: jupyterhub_nginx
+  tags: jupyter
