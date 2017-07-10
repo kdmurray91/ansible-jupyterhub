@@ -19,7 +19,7 @@
   tags: jupyter
 
 - name: add jupyter user
-  user: name=jupyter state=present groups=jupyter,shadow
+  user: name=jupyter state=present groups=jupyter,shadow password="{{jupyterpw}}"
   tags: jupyter
 
 - name: create jupyterhub folder in etc
