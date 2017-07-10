@@ -4,4 +4,4 @@ Cmnd_Alias JUPYTER_CMD = /usr/local/bin/sudospawner
 
 # actually give the Hub user permission to run the above command on behalf
 # of the above users without prompting for a password
-jupyter ALL=(%jupyter) NOPASSWD:JUPYTER_CMD
+{{jupyterhub_user}} ALL=(%{{jupyterhub_user}}) NOPASSWD:JUPYTER_CMD
