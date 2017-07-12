@@ -10,7 +10,7 @@
   shell: >
     curl https://bootstrap.pypa.io/get-pip.py > /dev/shm/get-pip.py &&
     python3 /dev/shm/get-pip.py ;
-    rm /dev/shm/get-pip
+    rm /dev/shm/get-pip.py
   args:
     creates: /usr/local/bin/pip3
   tags: jupyter
