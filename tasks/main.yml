@@ -113,6 +113,8 @@
 
 - name: "Generate DHparam"
   command: openssl dhparam -out /etc/jupyterhub/dhparam.pem 2048
+  args:
+    creates: /etc/juptyerhub/dhparam.pem
   tags: jupyter
   when: jupyterhub_nginx
 
