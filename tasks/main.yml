@@ -114,7 +114,7 @@
 - name: "Add jupterhub to nginx sites"
   template:
     src: nginx_jupyterhub.j2
-    dest: /etc/nginx/sites-available/jupyterhub
+    dest: /etc/jupyterhub/nginx.conf
     owner: root
     group: root
     mode: 0644
