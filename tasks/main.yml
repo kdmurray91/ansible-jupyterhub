@@ -111,10 +111,36 @@
   tags: jupyter
 
 
+- name: "Generate DHparam"
+  command: openssl dhparam -out /etc/jupyterhub/dhparam.pem 2048
+  tags: jupyter
+  when: jupyterhub_nginx
+
 - name: "Add jupterhub to nginx sites"
   template:
     src: nginx_jupyterhub.j2
     dest: /etc/jupyterhub/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: jupyterhub_nginx
+  tags: jupyter
+
+- name: "Make sites directory"
+  file:
+    path: /etc/nginx/sites-enabled/
+    state: directory
+    owner: root
+    group: root
+    mode: 0644
+  when: jupyterhub_nginx
+  tags: jupyter
+
+- name: "Make sites directory"
+  file:
+    src: /etc/jupyterhub/nginx.conf
+    path: /etc/nginx/sites-enabled/jupyterhub.conf
+    state: link
     owner: root
     group: root
     mode: 0644
